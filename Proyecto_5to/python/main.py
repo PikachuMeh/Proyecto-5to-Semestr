@@ -4,9 +4,8 @@ from fastapi.middleware.cors import CORSMiddleware
 app = FastAPI()
 
 origins = [
-    "http://localhost:5173/",
-    "http://localhost:8000",
-    "https://localhost:8000"
+    "http://localhost:5173",
+    "http://localhost:8080/"
 ]
 
 app.add_middleware(
@@ -17,12 +16,14 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
 @app.get("/")
-async def inicio():
+async def index():
     return "hola mundo!"
 
+
 @app.get("/otro")
-async def otro():
-    dato = 1
+async def outro():
+    data = 1
     #dato = bd.session.query(maestros).first()
-    return {"maestros": dato}
+    return {"maestros": data}

@@ -1,7 +1,25 @@
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const message = ref('')
+async function say() {
+
+  const query = await fetch("http://localhost:8080/otro")
+
+  console.log("ola")
+  if (query.ok)
+    console.log(await query.json())
+
+}
+
+</script>
+
 <template>
-  <div class="about">
-    <h1>This is an about page</h1>
-  </div>
+  <div class="moviestar">
+    <input name = "ola" v-model= "message" placeholder="editme"/>
+
+    <button id="generar" @click="say">Click to fetch</button>
+</div>
 </template>
 
 <style>
