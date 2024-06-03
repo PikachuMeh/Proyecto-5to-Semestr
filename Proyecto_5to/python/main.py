@@ -1,11 +1,17 @@
+from typing import Union
+from pydantic import BaseModel
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+import string
+# import bd.base as bd
+import json
+import re
 
 app = FastAPI()
 
 origins = [
     "http://localhost:5173",
-    "http://localhost:8080/"
+    "http://localhost:8080"
 ]
 
 app.add_middleware(
@@ -16,14 +22,23 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+class Item(BaseModel):
+    correo: str
+    password: str
+
 
 @app.get("/")
 async def index():
     return "hola mundo!"
 
 
-@app.get("/otro")
-async def outro():
-    data = 1
-    #dato = bd.session.query(maestros).first()
-    return {"maestros": data}
+@app.post("/otro/")
+async def otro(objeto: Item):
+
+    correo = objeto.correo
+    password = objeto.password
+
+    
+
+    # Access item_id from the URL path parameter
+    return {"message": f"Received item ID: {correo}"}

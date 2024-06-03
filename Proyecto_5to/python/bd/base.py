@@ -15,7 +15,7 @@ puerto = config["BD"]["Puerto"]
 
 nombre_bd = "bd_uestadal_poa"
 
-engine = create_engine(f"postgresql+psycopg://{usuario}:{password}@{ruta}:{puerto}/{nombre_bd}")
+engine = create_engine(f"mysql+pymysql://{usuario}:{password}@{ruta}:{puerto}/{nombre_bd}")
 
 Session = sessionmaker(bind=engine)
 session = Session()
