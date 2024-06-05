@@ -5,15 +5,12 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
 
-config = configparser.ConfigParser()
-config.read("config.ini")
+usuario = "root"
+password = ""
+ruta = "127.0.0.1"
+puerto = "3306"
 
-usuario = config["BD"]["Usuario"]
-password = config["BD"]["Password"]
-ruta = config["BD"]["Ruta"]
-puerto = config["BD"]["Puerto"]
-
-nombre_bd = "bd_uestadal_poa"
+nombre_bd = "login"
 
 engine = create_engine(f"mysql+pymysql://{usuario}:{password}@{ruta}:{puerto}/{nombre_bd}")
 

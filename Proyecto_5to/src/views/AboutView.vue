@@ -17,18 +17,17 @@ async function enviar() {
     "correo": email.value,
     "password": password.value
   }
+
   
-  console.log(JSON.stringify(data))
 
   try {
 
-    const response = await fetch(`http://localhost:8080/otro/`, {
+    const response = await fetch(`http://localhost:8080/login/`, {
       method: "POST", // Specify POST method for sending data
       headers: {
         "Content-Type": "application/json" // Set Content-Type for JSON data
       },
         body: JSON.stringify({
-          
         correo: data.correo,
         password: data.password// Include strings in the data object
        
