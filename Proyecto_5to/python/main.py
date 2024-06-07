@@ -8,7 +8,7 @@ import string
 import bd.base as bd
 import json
 import re
-from bd.models.models import usuarios,token,roles
+from bd.models.models import usuarios,token,roles,redes_sociales,redes_sociales_aux
 from email.message import EmailMessage
 import ssl
 import smtplib
@@ -68,29 +68,37 @@ async def registro(archivo : registro):
     correo = archivo.correo
     clave = archivo.password
 
-    # Generar un correo cada vez que haga un registro
-    load_dotenv()
-    password = os.getenv("PASSWORD")
-    email_sender = "juanmalave.itjo@gmail.com"  # el que envia el correo
+    # Validaciones correspondientes para no enviar spam o generar capturas de pantalla innecesarias
 
-    email_reciver = correo #el que recibe el correo
+    correo_reg = bd.session.query(usuarios).where(usuarios.correo == correo).first()
 
-    subject = "Registro de su cuenta"
+    if(correo_reg == None):
+        # Generar un correo cada vez que haga un registro
 
-    body = "Esto es un correo de prueba de mi proyecto de 5to SEMESTRE"
+                load_dotenv()
+                password = os.getenv("PASSWORD")
+                email_sender = "juanmalave.itjo@gmail.com"  # el que envia el correo
 
-    em = EmailMessage()
-    em["From"] = email_sender
-    em["To"] = email_reciver
-    em["Subject"] = subject
-    em.set_content(body)
+                email_reciver = correo #el que recibe el correo
 
-    contexto = ssl.create_default_context()
+                subject = "Registro de su cuenta"
 
-    with smtplib.SMTP_SSL("smtp.gmail.com",465,context=contexto) as smtp:
-        smtp.login(email_sender,password)
-        smtp.sendmail(email_sender,email_reciver,em.as_string())
+                body = "Esto es un correo de prueba de mi proyecto de 5to SEMESTRE"
 
+                em = EmailMessage()
+                em["From"] = email_sender
+                em["To"] = email_reciver
+                em["Subject"] = subject
+                em.set_content(body)
 
+                contexto = ssl.create_default_context()
 
-    return {"nombre": nombre,"apellido": apellido,"correo":correo,"clave": clave}
+                with smtplib.SMTP_SSL("smtp.gmail.com",465,context=contexto) as smtp:
+                    smtp.login(email_sender,password)
+                    smtp.sendmail(email_sender,email_reciver,em.as_string())
+        
+
+    else:
+        return {"falso": False}
+
+    #return {"si": correo_reg.correo}
