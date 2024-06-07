@@ -6,6 +6,7 @@ import EcosystemIcon from './icons/IconEcosystem.vue'
 import CommunityIcon from './icons/IconCommunity.vue'
 import SupportIcon from './icons/IconSupport.vue'
 import { ref } from 'vue'
+import {paises,estado} from './js/pais.js'
 
   var password = ref('')
   var email = ref('')
@@ -29,42 +30,13 @@ import { ref } from 'vue'
       "password": password.value
     }
     //CONSULTAR PAISES, me da paja meterlo en un js distinto asi que aja 
-    try {
-    const pais_token = await fetch('https://www.universal-tutorial.com/api/getaccesstoken', {
-      method: 'GET',
-      headers: {
-        'Accept': 'application/json',
-        'api-token': 'AuXnFjES43NqbdODZoc1anLtpO9op_9HsA7hqU56HJoxlbbNrMsUAzmsp6cqoZ0HhWQ',
-        'user-email': 'abc@gmail.com'
-      }
-    });
 
-    if (!pais_token.ok) {
-      throw new Error(`HTTP error! status: ${pais_token.status}`);
-    }else{
-      const token = await pais_token.json()
-      try {
-        const pais = await fetch('https://www.universal-tutorial.com/api/countries/', {
-          method: 'GET',
-          headers: {
-            "Authorization": token['auth_token'],
-            "Accept": "application/json"
-          }
-        });
 
-        if (!pais.ok) {
-          throw new Error(`HTTP error! status: ${pais.status}`);
-        }
-      } catch (error) {
-        console.error('Error fetching access token:', error);
-        // Handle errors appropriately in your application
-      }
-    }
+    let pais = await paises()
+    let estados = await estado("United States")
     
-  } catch (error) {
-    console.error('Error fetching access token:', error);
-    // Handle errors appropriately in your application
-  }
+    console.log(pais)
+    console.log(estados)
     //SACAR PAISES
     
     
@@ -94,7 +66,7 @@ import { ref } from 'vue'
         
         if(respuesta == null)
         {
-          console.log("ola piter")
+          console.log("si")
           
         }else if(respuesta['falso'] == false){
           alert("Error, Correo ya registrado")
@@ -190,4 +162,4 @@ import { ref } from 'vue'
     <button type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-block mb-4" @click="enviar">Registro</button>
   </WelcomeItem>
 </form>
-</template>
+</template>./js/token
