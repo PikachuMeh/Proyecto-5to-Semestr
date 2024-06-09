@@ -70,7 +70,7 @@ import {paises,estado,token} from './js/pais.js'
       "estado": state.value
     }
    
-    
+    console.log(data)
     //SACAR PAISES
     
    
@@ -88,7 +88,7 @@ import {paises,estado,token} from './js/pais.js'
           correo: data.correo,
           password: data.password,
           pais: data.pais,
-          estado: data.state// Include strings in the data object
+          estado: data.estado// Include strings in the data object
         
         })
 

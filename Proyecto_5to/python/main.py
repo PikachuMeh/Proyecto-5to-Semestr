@@ -69,6 +69,8 @@ async def registro(archivo : registro):
     apellido = archivo.apellido
     correo = archivo.correo
     clave = archivo.password
+    pais = archivo.pais
+    estado = archivo.estado
 
     # Validaciones correspondientes para no enviar spam o generar capturas de pantalla innecesarias
 
