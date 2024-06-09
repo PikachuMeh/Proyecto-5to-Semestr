@@ -46,7 +46,6 @@ import {paises,estado,token} from './js/pais.js'
             estadoSelect.innerHTML = ''; // Clear existing options
             
             let states = await estado(pais.value,tok['auth_token'])
-            console.log(states)
             states.forEach(function(paiss,index) {
               let op = document.createElement("option");
               op.value = states[index]['state_name']; // Assuming estado has a 'nombre' property
