@@ -37,6 +37,8 @@ class registro(BaseModel):
     apellido: str
     correo: str
     password: str
+    pais: str
+    estado: str
 
 
 @app.get("/")
@@ -102,3 +104,6 @@ async def registro(archivo : registro):
         return {"falso": False}
 
     #return {"si": correo_reg.correo}
+@app.post("/recuperacion")
+async def recuperacion(archivo : registro):
+    return 0

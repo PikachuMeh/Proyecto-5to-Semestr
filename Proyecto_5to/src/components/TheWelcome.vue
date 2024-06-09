@@ -6,17 +6,56 @@ import EcosystemIcon from './icons/IconEcosystem.vue'
 import CommunityIcon from './icons/IconCommunity.vue'
 import SupportIcon from './icons/IconSupport.vue'
 import { ref } from 'vue'
-import {paises,estado} from './js/pais.js'
+import {paises,estado,token} from './js/pais.js'
 
-  var password = ref('')
-  var email = ref('')
-  var nombre = ref('')
-  var apellido = ref('')
-  
+  let password = ref('')
+  let email = ref('')
+  let nombre = ref('')
+  let apellido = ref('')
+  let pais =  ref('')
+  let state = ref('')
+
   async function revisar_email(email){
-    var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    let re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(email);
 }
+ //CONSULTAR PAISES
+
+        
+        async function cargarPaises() {
+            let tok = await token()
+            let paisData = await paises(tok['auth_token']); // Replace with your actual country data
+            
+            let paisSelect = document.getElementById('paisSelect');
+
+            paisData.forEach(function(paiss,index) {
+              let op = document.createElement("option")
+              op.value = paisData[index]['country_name']
+              op.id = index
+              op.innerText = paisData[index]['country_name']
+              paisSelect.appendChild(op)  
+
+            })
+            
+        }
+        
+        async function populateEstados() {
+
+            let tok = await token()
+            let estadoSelect = document.getElementById('estadoSelect');
+            estadoSelect.innerHTML = ''; // Clear existing options
+            
+            let states = await estado(pais.value,tok['auth_token'])
+            console.log(states)
+            states.forEach(function(paiss,index) {
+              let op = document.createElement("option");
+              op.value = states[index]['state_name']; // Assuming estado has a 'nombre' property
+              op.innerText = states[index]['state_name'];
+              estadoSelect.appendChild(op);
+            });
+        }
+
+  
   async function enviar() {
 
     let Email = revisar_email(email.value)
@@ -27,32 +66,30 @@ import {paises,estado} from './js/pais.js'
       "nombre": nombre.value,
       "apellido": apellido.value,
       "correo": email.value,
-      "password": password.value
+      "password": password.value,
+      "pais": pais.value,
+      "estado": state.value
     }
-    //CONSULTAR PAISES, me da paja meterlo en un js distinto asi que aja 
-
-
-    let pais = await paises()
-    let estados = await estado("United States")
+   
     
-    console.log(pais)
-    console.log(estados)
     //SACAR PAISES
     
+   
     
-
     try {
 
       const response = await fetch(`http://localhost:8080/registro/`, {
         method: "POST", // Specify POST method for sending data
         headers: {
           "Content-Type": "application/json" // Set Content-Type for JSON data
-        },
+        }, 
           body: JSON.stringify({
           nombre: data.nombre,
           apellido: data.apellido,
           correo: data.correo,
-          password: data.password// Include strings in the data object
+          password: data.password,
+          pais: data.pais,
+          estado: data.state// Include strings in the data object
         
         })
 
@@ -145,12 +182,24 @@ import {paises,estado} from './js/pais.js'
     <template #icon>
       <EcosystemIcon />
     </template>
-    <template #default?>Paises</template>
+    <template #heading>Paises</template>
 
-      Pais:
-      <input type="Text" v-model = "pais" name="pais" id="form2Example1" class="form-control"  required placeholder="Pais:"/> 
-  
-  
+    Seleccione un Pais:
+    <div id = "select_pais">
+      <select id="paisSelect" v-model="pais">
+        <option  value = "0" disabled>Ingrese una opcion:</option>
+      </select>
+    </div>
+    Seleccione un Estado:
+    <div id = "select_estado">
+      <select id="estadoSelect"v-model="state">
+        <option value = "0" disabled>Ingrese una opcion:</option>
+      </select>
+    </div>
+    <button @click="cargarPaises">Cargar Países</button>
+    <button @click="populateEstados">Cargar Estados</button>
+
+      
     </WelcomeItem>
 
   <WelcomeItem>

@@ -1,20 +1,33 @@
-export async function paises(){
+export async function token(){
+  var token = await fetch('https://www.universal-tutorial.com/api/getaccesstoken', {
+    method: 'GET',
+    headers: {
+      "Accept": "application/json",
+      "api-token": "e2uWgFFOQa7zW452yuNW3MkW9-VBmCqyGGWIsVg5k_bgZ9yvHgko6L4p87akR6kzVMM",
+      "user-email": "juanes.malave@gmail.com"
+    }
+  });
+  return await token.json()
+}
+
+export async function paises(token){
     var pais = await fetch('https://www.universal-tutorial.com/api/countries', {
       method: 'GET',
       headers: {
-        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJfZW1haWwiOiJqdWFubWFsYXZlLml0am9AZ21haWwuY29tIiwiYXBpX3Rva2VuIjoiaEpTZzJwVFkyMUhMZHJKaHNxRE5Fcldhd0xFVFBCdDJLQ25odjVabGw1b29qc2NPM3J5TUYwZ05XbmtMa0ptWDZJYyJ9LCJleHAiOjE3MTc4ODgyMjl9.E5BSvZBnir7ZgzAbGYOUQe4Srx0fE7f3S5IhRcjwT1Y",//no toques nada we
+        "Authorization": "Bearer "+token,//no toques nada we
         "Accept": "application/json"
       }
     });
     return await pais.json()
   }
-  export async function estado(pais){
+  export async function estado(pais,token){
     var estado = await fetch('https://www.universal-tutorial.com/api/states/'+pais, {
       method: 'GET',
       headers: {
-        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJfZW1haWwiOiJqdWFubWFsYXZlLml0am9AZ21haWwuY29tIiwiYXBpX3Rva2VuIjoiaEpTZzJwVFkyMUhMZHJKaHNxRE5Fcldhd0xFVFBCdDJLQ25odjVabGw1b29qc2NPM3J5TUYwZ05XbmtMa0ptWDZJYyJ9LCJleHAiOjE3MTc4ODgyMjl9.E5BSvZBnir7ZgzAbGYOUQe4Srx0fE7f3S5IhRcjwT1Y",//no toques nada we
+        "Authorization": "Bearer "+token,//no toques nada we
         "Accept": "application/json"
       }
     });
     return await estado.json()
   }
+  
