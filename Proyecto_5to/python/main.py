@@ -45,7 +45,8 @@ class registro(BaseModel):
     token_idtoken: int
     recuperacion: str
 
-
+class recuperar(BaseModel):
+    correo: str
 @app.get("/")
 async def index():
     return "hola mundo!"
@@ -58,11 +59,16 @@ async def otro(objeto: Item):
     password = objeto.password
 
 
-    dato = Base.session.query(usuarios).first()
+    correox = session.query(usuarios).where(usuarios.correo == correo).first()
 
 
-    # Access item_id from the URL path parameter
-    return {"message": f"Received item ID: {dato.nombre}"}
+    if(correox == None or password != correox.clave):
+
+        return {"Falso":False}
+
+    else:
+
+        return {"correo":correox}
 
 
 
@@ -135,6 +141,13 @@ async def registro(archivo : registro):
 
     else:
         return {"falso": False}
+
 @app.post("/recuperacion")
-async def recuperacion(archivo : registro):
-    return 0
+async def recuperacion(archivo:recuperar):
+    correo_ver = archivo.correo
+    correo_final = session.query(usuarios).where(usuarios.correo == correo_ver).first()
+    if(correo_final == None):
+
+        return {"False": False}
+    else:
+        return {"data": correo_final}

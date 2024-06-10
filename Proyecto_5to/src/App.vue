@@ -1,18 +1,20 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
 import HelloWorld from './components/HelloWorld.vue'
+import Password_F from './components/recuperar.vue'
 </script>
 
 <template>
   <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
+    <img alt="Vue logo" class="logo" src="./assets/Pokemon_logo.png" width="125" height="125" />
 
     <div class="wrapper">
-      <HelloWorld msg="You did it!" />
+      <HelloWorld msg="Bienvenido al Centro Pokemon" />
 
       <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
+        <RouterLink to="/">Registro</RouterLink>
+        <RouterLink to="/about">Inicio de sesion</RouterLink>
+        <RouterLink to="/recuperar">Recuperar Contraseña</RouterLink>
       </nav>
     </div>
   </header>

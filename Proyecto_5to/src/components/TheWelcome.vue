@@ -7,7 +7,7 @@ import CommunityIcon from './icons/IconCommunity.vue'
 import SupportIcon from './icons/IconSupport.vue'
 import { ref } from 'vue'
 import {paises,estado,token} from './js/pais.js'
-import { RouterLink, RouterView } from 'vue-router'
+
 
 
   let password = ref('')
@@ -16,6 +16,7 @@ import { RouterLink, RouterView } from 'vue-router'
   let apellido = ref('')
   let pais =  ref('')
   let state = ref('')
+
 
   async function revisar_email(email){
     let re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -56,7 +57,6 @@ import { RouterLink, RouterView } from 'vue-router'
             });
         }
 
-  
   async function enviar() {
 
     let Email = revisar_email(email.value)
@@ -105,6 +105,7 @@ import { RouterLink, RouterView } from 'vue-router'
       console.log(response)
 
       if (response.ok) {
+        
         let respuesta = await response.json()
         alert(respuesta);
         
@@ -217,17 +218,7 @@ import { RouterLink, RouterView } from 'vue-router'
     <template #heading?>Enviar</template>
 
     <button type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-block mb-4" @click="enviar">Registro</button>
-    <template>
-  
-      <header>
 
-        <nav>
-          <RouterLink to="/Perfil">Perfil</RouterLink>
-          <RouterLink to="/recuperar">About</RouterLink>
-        </nav>
-      </header>
-  <RouterView />
-</template>
   </WelcomeItem>
 </form>
 </template>./js/token

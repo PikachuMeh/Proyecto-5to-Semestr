@@ -3,7 +3,6 @@ import { ref } from 'vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap/dist/js/bootstrap.bundle'
 import router from '../router';
-import { RouterLink, RouterView } from 'vue-router'
 
 const password = ref('') 
 const email = ref('')
@@ -23,7 +22,7 @@ async function enviar() {
 
   try {
 
-    const response = await fetch(`http://localhost:8080/login/`, {
+    const response = await fetch(`http://localhost:9000/login/`, {
       method: "POST", // Specify POST method for sending data
       headers: {
         "Content-Type": "application/json" // Set Content-Type for JSON data
@@ -37,16 +36,21 @@ async function enviar() {
 
     });
 
-    console.log(response)
-
+    let respuesta = await response.json()
     if (response.ok) {
-      console.log("Data sent successfully:", await response.json());
-      router.push('/perfil');
-    } else {
-      console.error("Error sending data:", await response.text());
+
+        if( respuesta["Falso"] == false){
+          alert("error, correo o contraseña invalida")
+        }else{
+          router.push({ name: 'perfil' });
+          console.log("Data sent successfully:", respuesta);
+        }
+    } else{
+      alert("Error sending data:", respuesta);
+
     }
   } catch (error) {
-    console.error("Error:", error);
+    console.log("Error:", error);
   }
   
 }else{
@@ -81,7 +85,7 @@ async function revisar_email(email){
 
   <!-- Password input -->
   <div data-mdb-input-init class="form-outline mb-4">
-    <input type="password" v-model = "password" id="form2Example2" class="form-control" />
+    <input type="password" v-model = "password" id="form2Example2" required class="form-control" />
     <label class="form-label" for="form2Example2">Password</label>
   </div>
 
@@ -94,32 +98,15 @@ async function revisar_email(email){
 
     <div class="col">
       <!-- Simple link -->
-      <a href="#!">Forgot password?</a>
+  
+
+
     </div>
   </div>
 
   <!-- Submit button -->
   <button type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-block mb-4" @click="enviar">Inicia sesion</button>
   <!-- Register buttons -->
-  <div class="text-center">
-    <p>Not a member? <a href="#!">Register</a></p>
-    <p>or sign up with:</p>
-    <button  type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-link btn-floating mx-1">
-      <i class="fab fa-facebook-f"></i>
-    </button>
-
-    <button  type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-link btn-floating mx-1">
-      <i class="fab fa-google"></i>
-    </button>
-
-    <button  type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-link btn-floating mx-1">
-      <i class="fab fa-twitter"></i>
-    </button>
-
-    <button  type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-link btn-floating mx-1">
-      <i class="fab fa-github"></i>
-    </button>
-  </div>
 </form>
 </template>
 
