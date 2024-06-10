@@ -2,7 +2,8 @@
 import { ref } from 'vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap/dist/js/bootstrap.bundle'
-
+import router from '../router';
+import { RouterLink, RouterView } from 'vue-router'
 
 const password = ref('') 
 const email = ref('')
@@ -40,6 +41,7 @@ async function enviar() {
 
     if (response.ok) {
       console.log("Data sent successfully:", await response.json());
+      router.push('/perfil');
     } else {
       console.error("Error sending data:", await response.text());
     }

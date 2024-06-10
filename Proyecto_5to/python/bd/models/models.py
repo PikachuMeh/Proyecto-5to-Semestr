@@ -1,8 +1,7 @@
-from ..base import Base
+from ..base import engine,Base
 import datetime
 from sqlalchemy import (Double, Table, Column, Integer, String, Text, CHAR, Boolean, Date, Time, TIMESTAMP, ForeignKey,Uuid, BigInteger )
 from sqlalchemy.dialects.postgresql import BIT
-
 
 
 class usuarios(Base):
@@ -15,8 +14,8 @@ class usuarios(Base):
     correo = Column(CHAR(150), nullable=False)
     pais = Column(Text, nullable=False)
     estado = Column(Text, nullable=False)
-    roles_idroles = Column(Integer, ForeignKey("roles.idRoles"), primary_key=True, nullable=False)
-    token_idtoken = Column(Integer, ForeignKey("token.idToken"), primary_key=True, nullable=False)
+    roles_idroles = Column(Integer, ForeignKey("roles.id_rol"), nullable=False)
+    token_idtoken = Column(Integer, ForeignKey("token.id_token"), nullable=False)
 
 
 class token(Base):

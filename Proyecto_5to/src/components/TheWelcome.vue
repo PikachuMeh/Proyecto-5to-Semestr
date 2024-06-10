@@ -7,6 +7,8 @@ import CommunityIcon from './icons/IconCommunity.vue'
 import SupportIcon from './icons/IconSupport.vue'
 import { ref } from 'vue'
 import {paises,estado,token} from './js/pais.js'
+import { RouterLink, RouterView } from 'vue-router'
+
 
   let password = ref('')
   let email = ref('')
@@ -27,7 +29,7 @@ import {paises,estado,token} from './js/pais.js'
             let paisData = await paises(tok['auth_token']); // Replace with your actual country data
             
             let paisSelect = document.getElementById('paisSelect');
-
+            paisSelect.innerHTML = '';
             paisData.forEach(function(paiss,index) {
               let op = document.createElement("option")
               op.value = paisData[index]['country_name']
@@ -58,7 +60,9 @@ import {paises,estado,token} from './js/pais.js'
   async function enviar() {
 
     let Email = revisar_email(email.value)
-
+    const random = Math.random().toString(36).substring(2,12)
+    console.log(random)
+    let numero = 3
     if(await Email == true){
     const data = {
       
@@ -67,9 +71,10 @@ import {paises,estado,token} from './js/pais.js'
       "correo": email.value,
       "password": password.value,
       "pais": pais.value,
-      "estado": state.value
+      "estado": state.value,
+      "rol": numero,
+      "token": random
     }
-   
     console.log(data)
     //SACAR PAISES
     
@@ -77,7 +82,7 @@ import {paises,estado,token} from './js/pais.js'
     
     try {
 
-      const response = await fetch(`http://localhost:8080/registro/`, {
+      const response = await fetch(`http://localhost:9000/registro/`, {
         method: "POST", // Specify POST method for sending data
         headers: {
           "Content-Type": "application/json" // Set Content-Type for JSON data
@@ -86,10 +91,12 @@ import {paises,estado,token} from './js/pais.js'
           nombre: data.nombre,
           apellido: data.apellido,
           correo: data.correo,
-          password: data.password,
+          clave: data.password,
           pais: data.pais,
-          estado: data.estado// Include strings in the data object
-        
+          estado: data.estado,
+          roles_idroles: data.rol,
+          token_idtoken: 0,
+          recuperacion: data.token,// Include strings in the data object
         })
 
 
@@ -99,7 +106,9 @@ import {paises,estado,token} from './js/pais.js'
 
       if (response.ok) {
         let respuesta = await response.json()
+        alert(respuesta);
         
+
         if(respuesta == null)
         {
           console.log("si")
@@ -136,7 +145,7 @@ import {paises,estado,token} from './js/pais.js'
     <template #heading>Nombre:</template>
     Ingrese su nombre:
     
-    <input type="text" v-model = "nombre" name="nombre" id="form2Example1" minlength="8" class="form-control" required placeholder="Nombre:"/>
+    <input type="text" v-model = "nombre" name="nombre" id="form2Example1" minlength="2" maxlength="20" class="form-control" required placeholder="Nombre:"/>
     
   
     
@@ -149,7 +158,7 @@ import {paises,estado,token} from './js/pais.js'
     <template #heading>Apellido</template>
 
     Ingrese su apellido:
-    <input type="text" v-model = "apellido" name="apellido" id="form2Example1" minlength="8" class="form-control" required placeholder="Apellido:"/>
+    <input type="text" v-model = "apellido" name="apellido" id="form2Example1" minlength="5"  maxlength="40" class="form-control" required placeholder="Apellido:"/>
     
     <br />
   </WelcomeItem>
@@ -208,6 +217,17 @@ import {paises,estado,token} from './js/pais.js'
     <template #heading?>Enviar</template>
 
     <button type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-block mb-4" @click="enviar">Registro</button>
+    <template>
+  
+      <header>
+
+        <nav>
+          <RouterLink to="/Perfil">Perfil</RouterLink>
+          <RouterLink to="/recuperar">About</RouterLink>
+        </nav>
+      </header>
+  <RouterView />
+</template>
   </WelcomeItem>
 </form>
 </template>./js/token
