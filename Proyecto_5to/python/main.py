@@ -12,7 +12,7 @@ from bd.models.models import usuarios,token,roles,redes_sociales,redes_sociales_
 from email.message import EmailMessage
 import ssl
 import smtplib
-
+import pyautogui
 
 
 app = FastAPI()
@@ -38,15 +38,20 @@ class registro(BaseModel):
     nombre: str
     apellido: str
     correo: str
+    cedula: str
     clave: str
     pais: str
     estado: str
     roles_idroles: int
     token_idtoken: int
     recuperacion: str
+    nacimiento: str
+    desc_per: str
 
 class recuperar(BaseModel):
     correo: str
+
+
 @app.get("/")
 async def index():
     return "hola mundo!"
@@ -89,6 +94,9 @@ async def registro(archivo : registro):
     del tokens['estado']
     del tokens['roles_idroles']
     del tokens['token_idtoken']
+    del tokens['cedula']
+    del tokens['nacimiento']
+    del tokens['desc_per']
 
     # Create an instance of the token class using the filtered tokens
 
@@ -119,9 +127,11 @@ async def registro(archivo : registro):
         email_reciver = correo #el que recibe el correo
 
         subject = "Registro de su cuenta"
-
+        screenshot = pyautogui.screenshot()
+        screenshot.save("../src/imagenes/captura_de_pantalla.png")
+        screenshot.show()
         body = f"We received a request to recover your account. \n"
-        body += f"Click on the following link to reset your password: "
+        body += f"Toma tu token de recuperacion:"
         body += f"{token_bus.recuperacion} \n"  # Replace with actual password reset link generation
         body += f"\nIf you didn't request a password reset, you can safely ignore this email."
 
@@ -144,10 +154,36 @@ async def registro(archivo : registro):
 
 @app.post("/recuperacion")
 async def recuperacion(archivo:recuperar):
+
     correo_ver = archivo.correo
     correo_final = session.query(usuarios).where(usuarios.correo == correo_ver).first()
+
     if(correo_final == None):
 
         return {"False": False}
     else:
+        load_dotenv()
+        password = os.getenv("PASSWORD")
+        email_sender = "juanmalave.itjo@gmail.com"  # el que envia el correo
+
+        email_reciver = correo_ver  # el que recibe el correo
+
+        subject = "Registro de su cuenta"
+
+        body = f"We received a request to recover your account. \n"
+        body += f"Esta es tu clave:"
+        body += f"{correo_final.clave} \n"  # Replace with actual password reset link generation
+        body += f"\nIf you didn't request a password reset, you can safely ignore this email."
+
+        em = EmailMessage()
+        em["From"] = email_sender
+        em["To"] = email_reciver
+        em["Subject"] = subject
+        em.set_content(body)
+
+        contexto = ssl.create_default_context()
+
+        with smtplib.SMTP_SSL("smtp.gmail.com", 465, context=contexto) as smtp:
+            smtp.login(email_sender, password)
+            smtp.sendmail(email_sender, email_reciver, em.as_string())
         return {"data": correo_final}
