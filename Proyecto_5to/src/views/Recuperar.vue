@@ -1,3 +1,4 @@
+
 <script setup>
 import {revisar_email} from '../js/validaciones.js'
 import { ref } from 'vue'
@@ -52,7 +53,6 @@ async function enviar(){
 </script>
 <template> 
     <form>
-        
         <div data-mdb-input-init class="form-outline mb-4">
             Recuperacion de contraseña
             <br>

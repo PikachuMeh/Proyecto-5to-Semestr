@@ -83,7 +83,7 @@ async def registro(archivo : registro):
 
 
     # Aca ira toda la parte donde recopila la informacion
-    correo = archivo.correo
+    correox = archivo.correo
     tokenx = archivo.recuperacion
     tokens = archivo.dict()
     del tokens['nombre']
@@ -101,7 +101,7 @@ async def registro(archivo : registro):
     # Create an instance of the token class using the filtered tokens
 
 
-    correo_reg = session.query(usuarios).where(usuarios.correo == correo).first()
+    correo_reg = session.query(usuarios).where(usuarios.correo == correox).first()
     if(correo_reg == None):
         # Generar un correo cada vez que haga un registro
         token_instance = token(**tokens)
@@ -124,7 +124,7 @@ async def registro(archivo : registro):
         password = os.getenv("PASSWORD")
         email_sender = "juanmalave.itjo@gmail.com"  # el que envia el correo
 
-        email_reciver = correo #el que recibe el correo
+        email_reciver = correox #el que recibe el correo
 
         subject = "Registro de su cuenta"
         screenshot = pyautogui.screenshot()

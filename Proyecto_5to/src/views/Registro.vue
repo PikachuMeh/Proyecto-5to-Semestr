@@ -64,22 +64,23 @@ let Apellido = validacion_nombre_apellido(apellido.value);
 const random = Math.random().toString(36).substring(2,12)
 let numero = 3
 cedula.value = cod_ced.value+"-"+cedula.value
+
 if(Email == true && Nombre == true && Apellido == true){
-const data = {
+  const data = {
   
-  "nombre": nombre.value,
-  "apellido": apellido.value,
-  "correo": email.value,
-  "password": password.value,
-  "pais": pais.value,
-  "estado": state.value,
-  "rol": numero,
-  "nacimiento": nacimiento.value,
-  "token": random,
-  "cedula": cedula.value,
-  "descripcion_persona": descripcion_persona.value
-}
-console.log(data)
+    "nombre": nombre.value,
+    "apellido": apellido.value,
+    "correo": email.value,
+    "password": password1.value,
+    "pais": pais.value,
+    "estado": state.value,
+    "rol": numero,
+    "nacimiento": nacimiento.value,
+    "token": random,
+    "cedula": cedula.value,
+    "descripcion_persona": descripcion_persona.value
+  }
+  console.log(data)
 //SACAR PAISES
 
 
@@ -114,7 +115,6 @@ try {
   if (response.ok) {
     
     let respuesta = await response.json()
-    alert(respuesta);
     
 
     if(respuesta == null)
@@ -144,24 +144,24 @@ alert("correo invalido")
   <form>
 
   
-  <div class = "about">
+  <div class = "about-form">
     Ingrese su nombre:
     
     <input type="text" v-model = "nombre" name="nombre" id="form2Example1" minlength="2" maxlength="20" class="form-control" required placeholder="Nombre:"/>
   </div>
-  <div class = "about">
+  <div class = "about-form">
     Ingrese su apellido:
     
     <input type="text" v-model = "apellido" name="apellido" id="form2Example1" minlength="5"  maxlength="40" class="form-control" required placeholder="Apellido:"/>
   </div>
-  <div class="about">
+  <div class="about-form">
 
     Correo:
     <input type="email" v-model = "email" name="email" id="form2Example1" class="form-control" required placeholder="Email:"/>
     
   </div>
 
-  <div class = "about">
+  <div class = "about-form">
 
 
             <template>Paises</template>
@@ -173,7 +173,7 @@ alert("correo invalido")
             </div>
   
   </div>
-  <div class = "about">
+  <div class = "about-form">
             Seleccione un Estado:
             <div id = "select_estado">
             <select id="estadoSelect" v-model="state">
@@ -182,40 +182,40 @@ alert("correo invalido")
             </div>
     </div>
 
-  <div class = "about">
+  <div class = "about-form">
     <h2 :class="clave(password1,password2) ? 'negative' : 'positive'">
         X
     </h2>
     Contraseña:
     <input type="password" v-model = "password1" name="password" id="form2Example1" class="form-control" minlength="8" required placeholder="Contraseña:"/>
     
-    <br>
+
     Revisar Contraseña
     <input type="password" v-model = "password2" v-on:change="clave" name="password" id="form2Example1" class="form-control" minlength="8" required placeholder="Contraseña:"/>
   </div>  
 
 
-  <div class = "about">
+  <div class = "about-form">
     Cedula:
-    <select v-model="cod_ced">
+    <select v-model="cod_ced" required>
       <option value="V" selected>V</option>
       <option value="J">J</option>
       <option value="E">E</option>
       <option value="I">I</option>
     </select>
-    <input type="text" v-model = "cedula" name="cedula" id="form2Example1" class="form-control" minlength="8" required placeholder="Cedula:"/>
+    <input type="number" v-model = "cedula" name="cedula" id="form2Example1" class="form-control" minlength="8" required placeholder="Cedula:"/>
   </div>
-  <div class ="about">
+  <div class ="about-form">
     Fecha de nacimiento:   
     <input type="date" v-model = "nacimiento" name="nacimiento" id="form2Example1" class="form-control" min="1934-06-11" max="2014-12-31" required />
   </div>
-  <div class= "about">
+  <div class= "about-form">
     <textarea required placeholder="Descripcion de tu persona" name="Descripcion persona" v-model="descripcion_persona" id="desc_per" cols="30" rows="10"></textarea>
   </div>
-  <div class="about">
+  <div class="about-form">
 
   </div>
-  <div class = "about">
+  <div class = "about-form">
     <button type="button" v-on:click="agregar_fruta">Cargar Países</button>
     <button type="button" v-on:click="enviar">Registro</button>
   </div>
@@ -227,10 +227,13 @@ alert("correo invalido")
 <style>
 @media (min-width: 1024px) {
   .about {
-    min-height: 5vh;
+    max-height: 3vh;
     display: flex;
     align-items: center;
   }
+}
+.about-form{
+  max-height: 4vh;
 }
 .negative {
     color: red;
