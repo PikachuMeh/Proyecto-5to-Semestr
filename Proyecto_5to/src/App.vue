@@ -3,9 +3,14 @@
 import { RouterLink, RouterView } from 'vue-router'
 import HelloWorld from './components/HelloWorld.vue'
 
+
+let sesionS = localStorage.getItem('token'); 
+let sesion = JSON.parse(sesionS)
+
+
 </script>
 <template>
-  <header>
+  <header v-if="!sesion">
     <img alt="Vue logo" class="logo" src="./assets/Pokemon_logo.png" width="300" height="125" />
 
     <div class="wrapper">

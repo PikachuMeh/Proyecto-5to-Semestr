@@ -5,10 +5,8 @@ import router from '../router';
 import {revisar_email} from '../js/validaciones.js'
 
 
-
 let email = ref('')
 let password = ref('')
-let opcion = true;
 async function enviar() {
 
 let Email = revisar_email(email.value)
@@ -43,8 +41,12 @@ if(Email == true){
         if( respuesta["Falso"] == false){
           alert("error, correo o contraseña invalida")
         }else{
+          
+          let token = true
           localStorage.setItem("correo",data.correo);
-          router.push({ name: 'perfil' });
+          localStorage.setItem("token",token);
+
+          router.push({ name: 'homepage' });
           console.log("Data sent successfully:", respuesta);
         }
     } else{
