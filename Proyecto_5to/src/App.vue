@@ -7,7 +7,6 @@ import HelloWorld from './components/HelloWorld.vue'
 let sesionS = localStorage.getItem('token'); 
 let sesion = JSON.parse(sesionS)
 
-
 </script>
 <template>
   <header v-if="!sesion">

@@ -1,10 +1,15 @@
 <script setup>
-import { ref } from 'vue'
+import { ref,defineEmits } from 'vue'
 import {RouterLink, RouterView } from 'vue-router'
 import router from '../router';
 import {revisar_email} from '../js/validaciones.js'
 
 
+let valor = localStorage.getItem('recarga');
+if(valor != 2){
+    localStorage.setItem('recarga',2);
+    location.reload();
+}
 let email = ref('')
 let password = ref('')
 async function enviar() {
@@ -45,7 +50,7 @@ if(Email == true){
           let token = true
           localStorage.setItem("correo",data.correo);
           localStorage.setItem("token",token);
-
+          localStorage.setItem("recarga",1)
           router.push({ name: 'homepage' });
           console.log("Data sent successfully:", respuesta);
         }

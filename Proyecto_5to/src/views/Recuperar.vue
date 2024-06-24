@@ -4,7 +4,11 @@ import {revisar_email} from '../js/validaciones.js'
 import { ref } from 'vue'
 let email = ref('')
 
-
+let valor = localStorage.getItem('recarga');
+if(valor != 2){
+    localStorage.setItem('recarga',2);
+    location.reload();
+}
 async function enviar(){
     let Email = revisar_email(email.value)
 
