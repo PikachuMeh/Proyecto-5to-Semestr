@@ -26,6 +26,8 @@ const salir = () => {
     <button id="salir" v-on:click="salir">Salir</button>
 
 </template>
+
+
 <style>
 nav{
     display: none; 

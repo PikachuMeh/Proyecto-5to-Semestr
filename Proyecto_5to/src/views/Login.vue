@@ -1,5 +1,5 @@
 <script setup>
-import { ref,defineEmits } from 'vue'
+import { ref } from 'vue'
 import {RouterLink, RouterView } from 'vue-router'
 import router from '../router';
 import {revisar_email} from '../js/validaciones.js'
