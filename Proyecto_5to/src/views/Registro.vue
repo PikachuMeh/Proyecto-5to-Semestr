@@ -17,10 +17,14 @@ let nombre = ref('')
 let apellido = ref('')
 let pais =  ref('')
 let state = ref('')
-let cod_ced = ref('')
+let cod_ced = ref()
 let cedula = ref('')
 let nacimiento = ref('')
 let descripcion_persona = ref('')
+let twitter = ref('')
+let Instagram = ref('')
+let Facebook = ref('')
+let Tik_tok = ref('')
 
 async function agregar_fruta() {
             let tok = await token()
@@ -84,7 +88,11 @@ if(Email == true && Nombre == true && Apellido == true){
     "nacimiento": nacimiento.value,
     "token": random,
     "cedula": cedula.value,
-    "descripcion_persona": descripcion_persona.value
+    "descripcion_persona": descripcion_persona.value,
+    "x": twitter.value,
+    "instagram": Instagram.value,
+    "facebook": Facebook.value,
+    "Tik_tok": Tik_tok.value
   }
   console.log(data)
 //SACAR PAISES
@@ -110,7 +118,11 @@ try {
       recuperacion: data.token,
       cedula: data.cedula,
       nacimiento: data.nacimiento,
-      desc_per: data.descripcion_persona// Include strings in the data object
+      desc_per: data.descripcion_persona,
+      x : data.x,
+      instagram : data.instagram,
+      facebook : data.facebook,
+      tik_tok : data.Tik_tok// Include strings in the data object
     })
 
 
@@ -219,6 +231,10 @@ alert("correo invalido")
     <textarea required placeholder="Descripcion de tu persona" name="Descripcion persona" v-model="descripcion_persona" id="desc_per" cols="30" rows="10"></textarea>
   </div>
   <div class="about-form">
+    <input type="text" v-model = "twitter" name="twitter" id="form2Example1" class="form-control" placeholder="X:"  />
+    <input type="text" v-model = "Instagram" name="instagram" id="form2Example1" class="form-control" placeholder="Instagram:"  />
+    <input type="text" v-model = "Facebook" name="Facebook" id="form2Example1" class="form-control" placeholder="Facebook:"  />
+    <input type="text" v-model = "Tik_tok" name="Tik_tok" id="form2Example1" class="form-control" placeholder="Tik tok:" required />
 
   </div>
   <div class = "about-form">

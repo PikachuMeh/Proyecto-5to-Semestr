@@ -47,6 +47,11 @@ class registro(BaseModel):
     recuperacion: str
     nacimiento: str
     desc_per: str
+    x: str
+    instagram: str
+    facebook: str
+    tik_tok : str
+
 
 class recuperar(BaseModel):
     correo: str
@@ -97,6 +102,10 @@ async def registro(archivo : registro):
     del tokens['cedula']
     del tokens['nacimiento']
     del tokens['desc_per']
+    del tokens['x']
+    del tokens['instagram']
+    del tokens['facebook']
+    del tokens['tik_tok']
 
     # Create an instance of the token class using the filtered tokens
 
@@ -114,12 +123,36 @@ async def registro(archivo : registro):
 
         nuevo_usuario = archivo.dict()
         del nuevo_usuario['recuperacion']
+        del nuevo_usuario['x']
+        del nuevo_usuario['instagram']
+        del nuevo_usuario['facebook']
+        del nuevo_usuario['tik_tok']
 
         nuevo_usuario['token_idtoken'] = token_bus.id_token
 
         usuario_instancia = usuarios(**nuevo_usuario)
         session.add(usuario_instancia)
         session.commit()
+
+        red_social = archivo.dict()
+        del red_social['nombre']
+        del red_social['apellido']
+        del red_social['correo']
+        del red_social['clave']
+        del red_social['pais']
+        del red_social['estado']
+        del red_social['roles_idroles']
+        del red_social['token_idtoken']
+        del red_social['cedula']
+        del red_social['nacimiento']
+        del red_social['desc_per']
+        del red_social['recuperacion']
+
+        social_instancia = redes_sociales(**red_social)
+        session.add(social_instancia)
+        session.commit()
+
+
         load_dotenv()
         password = os.getenv("PASSWORD")
         email_sender = "juanmalave.itjo@gmail.com"  # el que envia el correo
