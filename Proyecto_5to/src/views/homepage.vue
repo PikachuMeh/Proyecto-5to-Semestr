@@ -3,7 +3,8 @@
 import { ref } from 'vue';
 import router from '../router';
 import { RouterLink, RouterView } from 'vue-router'
-
+import Noticias from '../components/Noticias.vue';
+import Menu from '../components/Menu.vue'
 
 let sesionS = localStorage.getItem('token');
 let sesion = JSON.parse(sesionS);
@@ -14,24 +15,17 @@ if(valor != 2){
     location.reload();
 }
 
-async function login() {
-    localStorage.setItem('recarga',1);
-    localStorage.setItem('token',false)
-}
-
 
 
 </script>
 <template>
 
 <h2 v-if="sesion">Bienvenido a tu homepage</h2>
+
 <nav v-if="sesion">
-    <RouterLink to="/Perfil">Perfil</RouterLink>
-    <RouterLink to="/About">Acerca de nosotros</RouterLink>
-    <RouterLink to="/Noticias">Noticias</RouterLink>
-    <RouterLink to="/Contactanos"></RouterLink>
-    <RouterLink to="/Inicio" @click="login">Salir</RouterLink>
     
+    <Menu/>
+
 </nav>
 
 </template>

@@ -5,11 +5,10 @@ import {paises,estado,token} from '../js/01.js'
 import { revisar_email,validacion_nombre_apellido,clave } from '@/js/validaciones'; 
 
 let valor = localStorage.getItem('recarga');
-
 if(valor != 2){
+    localStorage.setItem('recarga',2);
     location.reload();
 }
-
 let password1 = ref('')
 let password2 = ref('')
 let email = ref('')

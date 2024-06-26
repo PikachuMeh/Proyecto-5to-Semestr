@@ -52,6 +52,8 @@ class registro(BaseModel):
     facebook: str
     tik_tok : str
 
+class consulta(BaseModel):
+    correo: str
 
 class recuperar(BaseModel):
     correo: str
@@ -61,6 +63,17 @@ class recuperar(BaseModel):
 async def index():
     return "hola mundo!"
 
+@app.post("/consulta_todo/")
+async def consulta(Correo : consulta):
+    correo_electronico = Correo.correo
+    datosx = session.query(usuarios).where(usuarios.correo == correo_electronico).first()
+
+    if datosx:
+        respuesta_json = {"datos": datosx}
+    else:
+        respuesta_json = {"mensaje": "No se encontraron datos para el correo electrónico especificado"}
+
+    return respuesta_json
 
 @app.post("/login/")
 async def otro(objeto: Item):

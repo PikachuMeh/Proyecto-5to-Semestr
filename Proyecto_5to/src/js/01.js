@@ -30,7 +30,3 @@ export async function token(){
       });
       return await estado.json()
     }
-
-export async function api_login(){
-
-}

@@ -2,9 +2,9 @@
 import { ref } from 'vue';
 import router from '../router';
 
-localStorage.setItem('recarga',1);
+
 let item = ref(''),
-    sesion; // Define item within setup
+    sesion; 
     let valor = localStorage.getItem('recarga');
 if(valor != 2){
     localStorage.setItem('recarga',2);
